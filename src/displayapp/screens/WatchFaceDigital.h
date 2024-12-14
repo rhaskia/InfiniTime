@@ -4,6 +4,7 @@
 #include <chrono>
 #include <cstdint>
 #include <memory>
+#include "Music.h"
 #include "displayapp/screens/Screen.h"
 #include "components/datetime/DateTimeController.h"
 #include "components/ble/SimpleWeatherService.h"
@@ -20,6 +21,7 @@ namespace Pinetime {
     class NotificationManager;
     class HeartRateController;
     class MotionController;
+    class MusicService;
   }
 
   namespace Applications {
@@ -34,10 +36,15 @@ namespace Pinetime {
                          Controllers::Settings& settingsController,
                          Controllers::HeartRateController& heartRateController,
                          Controllers::MotionController& motionController,
-                         Controllers::SimpleWeatherService& weather);
+                         Controllers::SimpleWeatherService& weather,
+                         Controllers::MusicService& musicService);
         ~WatchFaceDigital() override;
 
+        void UpdateLength();
+
         void Refresh() override;
+
+        void OnObjectEvent(lv_obj_t* obj, lv_event_t event);
 
       private:
         uint8_t displayedHour = -1;
@@ -52,6 +59,8 @@ namespace Pinetime {
 
         Utility::DirtyValue<std::chrono::time_point<std::chrono::system_clock, std::chrono::days>> currentDate;
 
+        lv_style_t btn_style;
+
         lv_obj_t* label_time;
         lv_obj_t* label_time_ampm;
         lv_obj_t* label_date;
@@ -63,12 +72,35 @@ namespace Pinetime {
         lv_obj_t* weatherIcon;
         lv_obj_t* temperature;
 
+        lv_obj_t* btnPrev;
+        lv_obj_t* btnPlayPause;
+        lv_obj_t* btnNext;
+        lv_obj_t* txtArtist;
+        lv_obj_t* txtTrack;
+        lv_obj_t* txtPlayPause;
+
+        lv_obj_t* txtTrackDuration;
+
+        std::string artist;
+        std::string album;
+        std::string track;
+
+        /** Total length in seconds */
+        int totalLength = 0;
+        /** Current position in seconds */
+        int currentPosition;
+        /** Last time an animation update or timer was incremented */
+        TickType_t lastIncrement = 0;
+
+        bool playing;
+
         Controllers::DateTime& dateTimeController;
         Controllers::NotificationManager& notificationManager;
         Controllers::Settings& settingsController;
         Controllers::HeartRateController& heartRateController;
         Controllers::MotionController& motionController;
         Controllers::SimpleWeatherService& weatherService;
+        Controllers::MusicService& musicService;
 
         lv_task_t* taskRefresh;
         Widgets::StatusIcons statusIcons;
@@ -88,7 +120,8 @@ namespace Pinetime {
                                              controllers.settingsController,
                                              controllers.heartRateController,
                                              controllers.motionController,
-                                             *controllers.weatherController);
+                                             *controllers.weatherController,
+                                             *controllers.musicService);
       };
 
       static bool IsAvailable(Pinetime::Controllers::FS& /*filesystem*/) {
