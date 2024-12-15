@@ -100,10 +100,11 @@ namespace Pinetime {
         Controllers::HeartRateController& heartRateController;
         Controllers::MotionController& motionController;
         Controllers::SimpleWeatherService& weatherService;
-        Controllers::MusicService& musicService;
 
         lv_task_t* taskRefresh;
         Widgets::StatusIcons statusIcons;
+
+        Controllers::MusicService& musicService;
       };
     }
 
