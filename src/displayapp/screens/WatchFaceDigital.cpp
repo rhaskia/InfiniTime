@@ -185,13 +185,8 @@ WatchFaceDigital::WatchFaceDigital(Controllers::DateTime& dateTimeController,
   lv_style_set_bg_opa(&btn_style, LV_STATE_DEFAULT, LV_OPA_0);
   // lv_style_set_transform_height(&btn_style, LV_STATE_DEFAULT, 0);
 
-  statusIcons.Create();
 
-  constexpr uint8_t FONT_HEIGHT = 12;
-  constexpr uint8_t LINE_PAD = 10;
-  constexpr int8_t MIDDLE_OFFSET = 5;
-
-    //This block from https://wiki.pine64.org/wiki/PineTime_Custom_Watchface_Tutorial#Using_icons
+  //This block from https://wiki.pine64.org/wiki/PineTime_Custom_Watchface_Tutorial#Using_icons
   scene.header.always_zero = 0; //Initialization
   scene.header.w = 120;                     // Setting the Width (or) Horizontal length of the image (number of px)
   scene.header.h = 120;                     // Setting the Height (or) vertical length of the image (number of px)
@@ -202,6 +197,11 @@ WatchFaceDigital::WatchFaceDigital(Controllers::DateTime& dateTimeController,
   lv_img_set_src(img_src, &scene);        // Set the created file as image (<name>)
   lv_obj_set_size(img_src, 240, 240);
 
+  statusIcons.Create();
+
+  constexpr uint8_t FONT_HEIGHT = 12;
+  constexpr uint8_t LINE_PAD = 10;
+  constexpr int8_t MIDDLE_OFFSET = 5;
   notificationIcon = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(notificationIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_LIME);
   lv_label_set_text_static(notificationIcon, NotificationIcon::GetIcon(false));
