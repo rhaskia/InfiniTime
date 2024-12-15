@@ -291,14 +291,14 @@ WatchFaceDigital::WatchFaceDigital(Controllers::DateTime& dateTimeController,
 
   txtArtist = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_long_mode(txtArtist, LV_LABEL_LONG_SROLL_CIRC);
-  lv_obj_align(txtArtist, nullptr, LV_ALIGN_IN_LEFT_MID, 12, MIDDLE_OFFSET + 1 * FONT_HEIGHT + 5);
+  lv_obj_align(txtArtist, nullptr, LV_ALIGN_IN_LEFT_MID, 12, MIDDLE_OFFSET + 1 * FONT_HEIGHT + 8);
   lv_label_set_align(txtArtist, LV_ALIGN_IN_LEFT_MID);
   lv_obj_set_width(txtArtist, LV_HOR_RES - 12);
   lv_label_set_text_static(txtArtist, "Artist Name");
 
   txtTrack = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_long_mode(txtTrack, LV_LABEL_LONG_SROLL_CIRC);
-  lv_obj_align(txtTrack, nullptr, LV_ALIGN_IN_LEFT_MID, 12, MIDDLE_OFFSET + 2 * FONT_HEIGHT + LINE_PAD);
+  lv_obj_align(txtTrack, nullptr, LV_ALIGN_IN_LEFT_MID, 12, MIDDLE_OFFSET + 2 * FONT_HEIGHT + LINE_PAD + 4);
 
   lv_label_set_align(txtTrack, LV_ALIGN_IN_LEFT_MID);
   lv_obj_set_width(txtTrack, LV_HOR_RES - 12);
